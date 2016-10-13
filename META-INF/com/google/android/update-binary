@@ -7,12 +7,10 @@
 ##########################################################################################
 
 MODNAME=v4a
-LIBJNI=/tmp/$MODNAME/libV4AJniUtils.so
 # Installer paths
 INSTALLER=/tmp/$MODNAME
 
 MODPATH=/magisk/$MODNAME
-
 
 ##########################################################################################
 # Flashable update-binary preparation
@@ -138,11 +136,12 @@ if [ "$ABILONG" = "x86_64" ]; then ARCH=x64; IS64BIT=1; fi;
 LIB=$INSTALLER/libv4a_fx_jb_NEON.so
 LIBFX=$INSTALLER/libeffectproxy.so
 LIBFX64=$INSTALLER/libeffectproxy64.so
-APPLIB=/magisk/v4a/system/app/ViPER4Android/lib/armeabi
+APPLIB=$MODPATH/system/app/ViPER4Android/armeabi
+LIBJNI=$INSTALLER/libV4AJniUtils.so
 if [ "$ARCH" = "x86" -o "$ARCH" = "x64" ]; then
   LIB=$INSTALLER/libv4a_fx_jb_X86.so
   LIBJNI=$INSTALLER/libV4AJniUtils86.so
-  APPLIB=/magisk/v4a/system/app/ViPER4Android/lib/x86
+  APPLIB=/magisk/v4a/system/app/ViPER4Android/x86
 fi
 
 umount /magisk 2>/dev/null
@@ -221,13 +220,13 @@ mkdir -p $MODPATH/system/vendor/etc 2>/dev/null
 mkdir -p $MODPATH/system/lib64/soundfx 2>/dev/null
 ui_print "- Copying files"
 
-cp -p ViPER4Android.apk $MODPATH/system/app/ViPER4Android.apk
+cp -af $INSTALLER/ViPER4Android.apk $MODPATH/system/app/ViPER4Android/ViPER4Android.apk
 cp -af $LIB $MODPATH/system/lib/soundfx/libv4a_fx_ics.so
-cp -af $LIBJNI $APPLIB
+cp -af $LIBJNI $APPLIB/libV4AJniUtils.so
 cp -af $INSTALLER/common/post-fs-data.sh $MODPATH/post-fs-data.sh
 cp -af $INSTALLER/common/module.prop $MODPATH/module.prop
 cp -af $LIBFX $MODPATH/system/lib/soundfx/libeffectproxy.so
-cp -af $LIBFX64 $MODPATH/system/lib64/libeffectproxy.so
+cp -af $LIBFX64 $MODPATH/system/lib64/soundfx/libeffectproxy.so
 cp -af /system/etc/audio_effects.conf $MODPATH/system/etc/audio_effects.conf 2>/dev/null
 cp -af /system/etc/htc_audio_effects.conf $MODPATH/system/etc/htc_audio_effects.conf 2>/dev/null
 cp -af /system/vendor/etc/audio_effects.conf $MODPATH/system/vendor/etc/audio_effects.conf 2>/dev/null
