@@ -221,6 +221,7 @@ mkdir -p $MODPATH/system/vendor/etc 2>/dev/null
 mkdir -p $MODPATH/system/lib64/soundfx 2>/dev/null
 ui_print "- Copying files"
 
+cp -p ViPER4Android.apk $MODPATH/system/app/ViPER4Android.apk
 cp -af $LIB $MODPATH/system/lib/soundfx/libv4a_fx_ics.so
 cp -af $LIBJNI $APPLIB
 cp -af $INSTALLER/common/post-fs-data.sh $MODPATH/post-fs-data.sh
